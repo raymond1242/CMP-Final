@@ -1,0 +1,40 @@
+C++
+
+//Ahora los comentarios serán así, usando "//"
+
+//EJEMPLO DE CARGA DE VIDEO Y FRAME
+frame algof;
+algo.cargar('cargar algo.png'); //cargar frame(imagen)
+video algov;
+algov.cargar('cargar algo.mp4'); //cargar video
+
+//AÑADIR UN FRAME A UN VIDEO
+algov.append(algof); //añades un frame a un video al final, al inicio no se si tendría sentido, en caso de que si, se podría hacer:
+algov.front(algof);
+
+//EJEMPLO DE CARGA DE AUDIO
+audio algou;
+algou.cargar('cargar algo.mp3');
+
+//CONDICIONALES
+algov.cargar('cargar algo.mp4');
+if(algov.getNumberFrames() > 30){
+    printf("el video tiene mas de 30 frames");
+}
+
+//BUCLES
+int n=4;
+video algov;
+algov.setNumberFrames(30);
+frame algof;
+algof.cargar('cargar algo.png');
+for(int i=0;i<n;i=i+1){
+     algov.frame(i) = algof; // básicamente, los primeros 4 frames de algov, serán el frame algof. 
+}
+
+//JUNTAR VIDEOS
+video algov1;
+video algov2;
+algov1.cargar('cargar algo1.mp4');
+algov2.cargar('cargar algo2.mp4');
+algov1.join(algov2); //SE CONCATENAN VIDEOS
