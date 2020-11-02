@@ -25,21 +25,21 @@ class Token:
         self.column = col
         if ty == 'OTHER':
             if self.item in operation_assign:
-                self.type = 'OP_ASSIGN'
+                self.type = it
             elif self.item in parenthesis:
-                self.type = 'AGRUP'
+                self.type = it
             elif self.item in comparison_op:
-                self.type = 'OP_COMPARE'
+                self.type = it
 
         elif ty == 'STREAM':
             if self.item in reserved_word:
-                self.type = 'TYPE'
+                self.type = 'type'
             elif self.item in conditional_statement:
-                self.type = 'CONDITION'
+                self.type = it
             elif self.item in function_statement:
-                self.type = 'FUNCTION'
+                self.type = 'name'
             else:
-                self.type = 'VARIABLE'
+                self.type = 'name'
         else:
             self.type = ty
 
@@ -47,7 +47,7 @@ class Token:
         return "<%s, %s, %d, %d>" % (self.item, self.type, self.line, self.column)
 
     def __repr__(self):
-        return "<%s,%s,%d, %d>" % (self.item, self.type, self.line, self.column)
+        return "<%s, %s, %d, %d>" % (self.item, self.type, self.line, self.column)
 
 
 class Tokenizer:
@@ -72,21 +72,21 @@ class Tokenizer:
             elif line[idx] == ' ' or line[idx] == '\n':
                 idx += 1
             elif line[idx] == '.':
-                token = Token(line[idx:idx+1], "DOT", n_line, idx)
+                token = Token(line[idx:idx+1], '.', n_line, idx)
                 self.tokens.append(token)
                 idx += 1
             elif line[idx] == '\'':
                 next = line.find('\'', idx+1)
-                token = Token(line[idx:next+1], "STRING", n_line, idx)
+                token = Token(line[idx:next+1], "string", n_line, idx)
                 self.tokens.append(token)
                 idx = next+1
             elif line[idx] == ';':
-                token = Token(line[idx:idx+1], "END_STATEMENT", n_line, idx)
+                token = Token(line[idx:idx+1], ';', n_line, idx)
                 self.tokens.append(token)
                 idx += 1
             else:
                 if line[idx:idx+2] in comparison_op:
-                    token = Token(line[idx:idx+2], "OP_COMPARE", n_line, idx)
+                    token = Token(line[idx:idx+2], line[idx:idx+2], n_line, idx)
                     self.tokens.append(token)
                     idx += 2
                 else:
@@ -98,7 +98,7 @@ class Tokenizer:
         begin = index
         while (index < len(string)) and string[index].isdigit():
             index += 1
-        temp = Token(string[begin:index], "NUMBER", n_line, begin)
+        temp = Token(string[begin:index], "number", n_line, begin)
         return temp, index
 
     def checkVariable(self, string, n_line, index):
