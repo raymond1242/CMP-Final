@@ -1,4 +1,6 @@
 Frame algof;
+algo.cargar('cargar algo.png');
 while(temp != 5){
     algof = 15;
 }
+

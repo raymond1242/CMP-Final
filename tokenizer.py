@@ -6,7 +6,7 @@ parenthesis = ['(', ')', '[', ']', '{', '}']
 
 comparison_op = ['!=', '==', '<', '>', '<=', '>=']
 
-reserved_word = ['Frame', 'Video', 'Audio', 'int', 'string']
+reserved_word = ['Frame', 'Video', 'Audio', 'int']
 
 conditional_statement = ['for', 'while', 'if']
 
@@ -31,7 +31,7 @@ class Token:
             elif self.item in comparison_op:
                 self.type = 'OP_COMPARE'
 
-        elif ty == 'STRING':
+        elif ty == 'STREAM':
             if self.item in reserved_word:
                 self.type = 'TYPE'
             elif self.item in conditional_statement:
@@ -71,6 +71,15 @@ class Tokenizer:
                 self.tokens.append(token)
             elif line[idx] == ' ' or line[idx] == '\n':
                 idx += 1
+            elif line[idx] == '.':
+                token = Token(line[idx:idx+1], "DOT", n_line, idx)
+                self.tokens.append(token)
+                idx += 1
+            elif line[idx] == '\'':
+                next = line.find('\'', idx+1)
+                token = Token(line[idx:next+1], "STRING", n_line, idx)
+                self.tokens.append(token)
+                idx = next+1
             elif line[idx] == ';':
                 token = Token(line[idx:idx+1], "END_STATEMENT", n_line, idx)
                 self.tokens.append(token)
@@ -96,7 +105,7 @@ class Tokenizer:
         begin = index
         while (index < len(string)) and string[index].isalpha():
             index += 1
-        temp = Token(string[begin:index], "STRING", n_line, begin)
+        temp = Token(string[begin:index], "STREAM", n_line, begin)
         return temp, index
 
 '''
